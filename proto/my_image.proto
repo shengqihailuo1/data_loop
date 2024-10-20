@@ -1,0 +1,81 @@
+syntax = "proto3";
+package my_package_name;
+
+message SensorDataReq {
+    bytes video_chunk_data = 1;  // 视频切块数据
+    int32 chunk_index = 2;       // 切块的序号，服务端用来拼接视频
+    int32 total_chunks = 3;      // 视频切块总数
+    int32 frame_rate = 4;        // 帧率
+    string format = 5;           // 视频格式，如 "mp4" 或 "avi"
+}
+
+message SensorDataRsp {
+    string msg = 1;
+    bool result_bool = 2;
+}
+
+service my_service {
+    rpc my_service_function (stream SensorDataReq) returns (SensorDataRsp);
+}
+
+
+/*
+syntax = "proto3";
+//import "common.proto";
+//package aimrt.protocols.example;
+package my_package_name;
+
+message SensorDataReq {
+    bytes image_data = 1;
+    int32 height = 2;
+    int32 width = 3;
+    //bytes point_cloud_data = 2;
+    //string imu_data = 3;
+}
+
+message SensorDataRsp {
+    string msg = 1;
+    bool result_bool = 2;
+}
+
+service my_service {
+  rpc my_service_function(SensorDataReq) returns (SensorDataRsp);
+}
+*/
+
+
+/*
+//原来的rpc.proto
+
+syntax = "proto3";
+
+import "common.proto";
+
+package aimrt.protocols.example;
+
+message GetFooDataReq {
+  string msg = 1;
+}
+
+message GetFooDataRsp {
+  uint64 code = 1;
+  string msg = 2;
+  aimrt.protocols.example.ExampleFoo data = 3;
+}
+
+message GetBarDataReq {
+  string msg = 1;
+  aimrt.protocols.example.ExampleBar data = 2;
+}
+
+message GetBarDataRsp {
+  uint64 code = 1;
+  string msg = 2;
+}
+
+service ExampleService {
+  rpc GetFooData(GetFooDataReq) returns (GetFooDataRsp);
+  rpc GetBarData(GetBarDataReq) returns (GetBarDataRsp);
+}
+*/
+
